@@ -82,7 +82,7 @@
                     //-- SDS: added this to prevent out-of-boundary
                     if (read < 0 || read >= wh) break;
                     
-					pixel = &originalData[read];
+					pixel = (ccColor4B*)&originalData[read];
 					cr+= pixel->r*kernel[i];
 					cg+= pixel->g*kernel[i];
 					cb+= pixel->b*kernel[i];
