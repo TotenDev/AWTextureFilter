@@ -25,6 +25,7 @@
 
 #import "AWTextureFilter.h"
 #import "ccMacros.h"
+#import "cocos2d.h"
 
 @implementation AWTextureFilter
 
@@ -32,13 +33,13 @@
 {
     int read, i, xl, yl, yi, ym, ri, riw;
 	const int wh = width*height;
-	ccGridSize size = ccg(rect.size.width, rect.size.height);
+	CGPoint size = ccp(rect.size.width, rect.size.height);
 	
 	size.x = (size.x==0) ? contentSize.width : size.x;
 	size.y = (size.y==0) ? contentSize.height : size.y;
 	
 	//Check data
-	ccGridSize position = ccg(MAX(0, rect.origin.x), MAX(0, rect.origin.y));
+	CGPoint position = ccp(MAX(0, rect.origin.x), MAX(0, rect.origin.y));
     size.x = position.x+size.x-MAX(0, (position.x+size.x)-width);
 	size.y = position.y+size.y-MAX(0, (position.y+size.y)-height);
     yi = position.y*width;
@@ -61,7 +62,7 @@
     kernel[radius] = g;
     sum+=g;
 	
-	if(format == kTexture2DPixelFormat_RGBA8888){
+	if(format == kCCTexture2DPixelFormat_RGBA8888){
 		int cr, cg, cb, ca;
 		
 		const ccColor4B *originalData = (ccColor4B*)input;
@@ -131,7 +132,7 @@
 		//Free temp data
 		free(temp);
 		
-	}else if(format == kTexture2DPixelFormat_A8){
+	}else if(format == kCCTexture2DPixelFormat_A8){
 		int ca;
 
 		const unsigned char *originalData = (const unsigned char*) input;
