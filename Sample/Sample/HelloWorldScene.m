@@ -15,8 +15,7 @@ enum {
 static int sceneIdx=0;
 static NSString *transitions[] = {
 	@"FullFilter",
-	@"PartialFilter",
-	@"TextShadow",	
+	@"PartialFilter"
 };
 
 Class nextAction()
@@ -190,61 +189,3 @@ Class restartAction()
 	[self addChild:blur];
 }
 @end
-
-#pragma mark Test 3
-@implementation TextShadow
--(NSString*) title
-{
-	return @"Text shadow";
-}
-
--(void) doTest
-{
-	CGSize winSize = [[CCDirector sharedDirector] winSize];
-
-	CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(255, 255, 255, 255) width:300 height:50];
-	[background setIgnoreAnchorPointForPosition:YES];
-	[background setAnchorPoint:ccp(0.5f, 0.5f)];
-	[background setPosition:ccp(winSize.width/2, winSize.height/2)];
-		
-	//Create sprites to show the textures
-	label_ = [CCSprite node];
-	[label_ setPosition:ccp(winSize.width/2, winSize.height/2)];
-	
-	shadowLa_ = [CCSprite node];
-	[shadowLa_ setPosition:ccp(winSize.width/2+1, winSize.height/2+1)];
-	[shadowLa_ setColor:ccBLACK];
-	
-	[self addChild:background z:-1];
-	[self addChild:shadowLa_ z:0];
-	[self addChild:label_ z:1];
-	
-	number_ = 0;
-	[self schedule:@selector(updateLabel:) interval:0.0f];
-}
-
-- (void) updateLabel:(ccTime)delta
-{
-	[self setText:[NSString stringWithFormat:@"N: %d", number_]];
-	number_++;
-}
-
-- (void) setText:(NSString*)text
-{	
-	//Create mutable texture
-	CCTexture2DMutable *shadowTexture = [[[CCTexture2DMutable alloc] initWithString:text fontName:@"Arial" fontSize:28] autorelease];
-	
-	//Copy the mutable texture as non mutable texture
-	CCTexture2D *labelTexture = [[shadowTexture copyMutable:NO] autorelease];
-	
-	[label_ setTexture:labelTexture];
-	[label_ setTextureRect:CGRectMake(0, 0, shadowTexture.contentSize.width, shadowTexture.contentSize.height)];
-	
-	//Apply blur to the mutable texture
-	[AWTextureFilter blur:shadowTexture radius:4];
-	
-	[shadowLa_ setTexture:shadowTexture];
-	[shadowLa_ setTextureRect:CGRectMake(0, 0, shadowTexture.contentSize.width, shadowTexture.contentSize.height)];
-}
-@end
-
