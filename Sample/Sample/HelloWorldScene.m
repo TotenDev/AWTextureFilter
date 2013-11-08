@@ -178,7 +178,7 @@ Class restartAction()
 	CCTexture2DMutable *mutableTexture = [[[CCTexture2DMutable alloc] initWithCGImage:[[UIImage imageNamed:@"example2.png"] CGImage] resolutionType:kCCResolutioniPhone] autorelease];
 	
 	//Apply blur to the mutable texture
-	[AWTextureFilter blur:mutableTexture radius:8 rect:CGRectMake(20, 40, 200, 260)];
+	[AWTextureFilter blur:mutableTexture radius:8 rect:CGRectMake(20, 40, 200, 260) allowRetina:YES];
 	
 	CGSize winSize = [[CCDirector sharedDirector] winSize];
 	

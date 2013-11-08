@@ -223,3 +223,6 @@
 
 
 @end
+
+
+@implementation CCMutableTexture2D @end

@@ -189,10 +189,10 @@
 
 + (CCTexture2DMutable*) blur:(CCTexture2DMutable*)texture radius:(int)radius
 {
-	return [self blur:texture radius:radius rect:CGRectZero];
+	return [self blur:texture radius:radius rect:CGRectZero allowRetina:YES];
 }
 
-+ (CCTexture2DMutable*) blur:(CCTexture2DMutable*)texture radius:(int)radius rect:(CGRect)rect;
++ (CCTexture2DMutable*) blur:(CCTexture2DMutable*)texture radius:(int)radius rect:(CGRect)rect allowRetina:(BOOL)allowRetina;
 {
 	if(!texture)
 		return nil;
@@ -212,7 +212,7 @@
 			 format:texture.pixelFormat
 			  width:texture.pixelsWide
 			 height:texture.pixelsHigh
-		contentSize:texture.contentSizeInPixels
+      contentSize:(allowRetina ? texture.contentSizeInPixels : texture.contentSize)
 			 radius:radius
 			   rect:rect
 	 ];
